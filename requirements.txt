@@ -1,0 +1,12 @@
+langchain
+openai
+streamlit
+duckduckgo-search
+requests_aws4auth
+boto3
+json
+requests
+datetime
+pandas
+sys
+typing
