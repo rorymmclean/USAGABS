@@ -35,7 +35,7 @@ headers = { "Content-Type": "application/json" }
 host = 'https://search-aderas-gabs-7wmy5nh5ue564vpv63uogepqbe.us-east-1.es.amazonaws.com' 
 
 # OpenAI Credentials
-openai_api_key = st.secrets["openai_api_key"]
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 llm = ChatOpenAI(model="gpt-4", temperature=0)
 
