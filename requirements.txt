@@ -7,5 +7,4 @@ boto3
 requests
 datetime
 pandas
-sys
 typing
