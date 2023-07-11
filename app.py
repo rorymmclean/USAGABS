@@ -150,7 +150,7 @@ class OpenSearchSQL(BaseTool):
       
     The table and fields include:
     
-    usaspending_sql (ContractID, AgencyName, SubAgencyName, AwardAmount, PotentialAwardAmount, AwardDate, FiscalYear": int(csvname[2:6]), StartDate, PotentialEndDate, Recipient, RecipientAddress, PlaceOfPerformance, ContractType, Setaside, NAICS", NAICSDescription, NumberOfOffers, Description, ProductCode) 
+    usaspending_sql (ContractID, AgencyName, SubAgencyName, AwardAmount, PotentialAwardAmount, AwardDate, FiscalYear, StartDate, PotentialEndDate, Recipient, RecipientAddress, PlaceOfPerformance, ContractType, Setaside, NAICS, NAICSDescription, NumberOfOffers, Description, ProductCode) 
         
     """
 
@@ -200,6 +200,41 @@ search_agent = initialize_agent(
 
 st.set_page_config(page_title="USASpending GABS", layout="wide", initial_sidebar_state="collapsed")
 st.title("USASpending GABS")
+
+with st.expander("Instructions", expanded=False):
+  st.markdown("#### Background:")
+  st.markdown("""
+    This app is able to perform a semantic search and a SQL search against the USASpending database. 
+    It is also able to search DuckDuckGo if you quest requires additional information from the internet.
+    Which tool the chain selects depends upon how you phrased your question. 
+    For example, if you want the total dollars awarded for a NAICS code, you need a SQL statement.
+    The semantic embedding search will only return 20 records so totals will be seriously undercounted.
+    However, asked for records related to some obscure technology like "quatum computing" might be satisfied with 20 record.
+    """
+  )
+  st.markdown("#### Data:")
+  st.markdown("""
+    The USA Spending record is reduced to the following fields:
+    """)
+  st.markdown("""
+    ContractID, AgencyName, SubAgencyName, AwardAmount, PotentialAwardAmount, AwardDate, FiscalYear, StartDate, PotentialEndDate, Recipient, RecipientAddress, PlaceOfPerformance, ContractType, Setaside, NAICS, NAICSDescription, NumberOfOffers, Description, and ProductCode
+    """)
+  st.markdown("""
+    Only records with the same NAICS codes as Aderas are in the database. Only the initial record for a contract are included...this database does not have modification records. 
+    """)
+  st.markdown("#### Example Queries:")
+  st.markdown("Queries can be compound and capitalize on ChatGPT's ability to write English. For example:")
+  st.markdown(":red[Based upon the description of all the contracts awarded to recipient LIKE \"ADERAS%\", write a one paragraph description of what this company provides.]")
+  st.markdown("Queries can be draw from both SQL, Semantic Embedding, and DuckDuckGo. For example:")
+  st.markdown(""":red[
+    Find the top 3 leading contractors with government contracts that semantically has anything to do with 
+implementing Oracle Cloud technology.
+Next, report the total number of contracts and total award amount for those recipients. 
+Finally, provide the name of the CEO and the address of the headquarters for those recipients.]""")
+  st.markdown("""
+    If you know you want to run a semantic query, put that in your question...just remember that it will only return a maximum of 20 contracts. 
+    If you want the data in tabular format say "Create a table that..." and it just might oblige.
+    """)
 
 with st.sidebar:
     model_radio = st.radio(
